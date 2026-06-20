@@ -22,9 +22,9 @@ const Registration = async (req, res, next) => {
     const emailExist = await User.findOne({ email: email });
     if (emailExist) {
       res.status(200).json({ message: "Your Email is Alradey Exist in database" });
-      if (!country) {
-        return res.status(400).json({ message: "Country is required" });
-      }
+      // if (!country) {
+      //   return res.status(400).json({ message: "Country is required" });
+      // }
     } else {
       const createUser = await User.create({ name, email, password, country, city });
       //Condition For Creating User+=+=
