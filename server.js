@@ -12,6 +12,7 @@ import path from "path";
 
 const app = express();
 
+app.use(express.json());
 //Middleware
 app.use(
   cors({
@@ -23,7 +24,6 @@ app.use(
   })
 );
 
-app.use(express.json());
 
 
 // Allow Express to serve local image files
