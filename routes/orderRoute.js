@@ -1,39 +1,23 @@
 import express from "express";
-import orderModel from "../models/orderModel.js";
+import { 
+  placeOrder, 
+  getAllOrders, 
+  deleteOrder, 
+  clearAllOrders 
+} from "../controller/orderController.js";
 
-const router = express.Router();
+const orderRouter = express.Router();
 
-// Get all orders
-router.get("/", async (req, res, next) => {
-  try {
-    const orders = await orderModel.find();
-    res.json(orders);
-  } catch (err) {
-    console.error("Error fetching orders:", err);
-    next(err);
-  }
-});
+// Public facing path used by client Collection cards
+orderRouter.post("/", placeOrder);
 
-// Delete single order
-router.delete("/:id", async (req, res, next) => {
-  try {
-    await orderModel.findByIdAndDelete(req.params.id);
-    res.json({ message: "Order deleted" });
-  } catch (err) {
-    console.error("Error deleting order:", err);
-    next(err)
-  }
-});
+// Dashboard path used by administrative user tracking grid
+orderRouter.get("/", getAllOrders);
 
-// Clear all orders
-router.delete("/clear", async (req, res, next) => {
-  try {
-    await orderModel.deleteMany({});
-    res.json({ message: "All orders cleared" });
-  } catch (err) {
-    console.error("Error clearing all orders:", err);
-    next(err)
-  }
-});
+// Clear collection path setup (Must sit above /:id dynamic parameter hook)
+orderRouter.delete("/clear", clearAllOrders);
 
-export default router; // ✅ Important line
+// Single object removal parameter target
+orderRouter.delete("/:id", deleteOrder);
+
+export default orderRouter;
