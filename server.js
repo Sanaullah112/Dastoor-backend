@@ -17,7 +17,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://dastoor-shawls-maker.vercel.app/"
+      "https://dastoor-shawls-maker.vercel.app"
     ],
     credentials: true
   })
